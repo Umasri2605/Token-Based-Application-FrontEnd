@@ -12,6 +12,7 @@ function EmployeeTable() {
   });
 
   const token = localStorage.getItem("token");
+  const userData = JSON.parse(localStorage.getItem("userData"));
   const fetchEmployees = async () => {
     try {
       const res = await fetch("http://localhost:3500/employees", {
@@ -61,7 +62,10 @@ function EmployeeTable() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`   
           },
-          body: JSON.stringify(form)
+          body: JSON.stringify({
+             ...form,
+             username: userData.username
+            })
         });
         toast.success("Employee added successfully!");
       }
